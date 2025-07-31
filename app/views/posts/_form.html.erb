@@ -16,6 +16,13 @@
   </div>
 
   <div class="col-12">
+    <%= form.label :category_id, "Category", class: "form-label" %>
+    <%= form.collection_select :category_id, Category.all, :id, :name, 
+        { prompt: "Select a category (optional)" }, 
+        { class: "form-select" } %>
+  </div>
+
+  <div class="col-12">
     <%= form.label :body, class: "form-label" %>
     <%= form.text_area :body, class: "form-control", rows: 10, placeholder: "Write your post content here..." %>
   </div>

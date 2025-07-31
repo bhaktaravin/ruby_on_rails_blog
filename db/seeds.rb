@@ -1,3 +1,32 @@
+# Create categories first
+puts "Creating categories..."
+
+categories_data = [
+  {
+    name: "Web Development",
+    description: "Posts about web development, frameworks, and programming."
+  },
+  {
+    name: "Technology",
+    description: "Latest technology trends and insights."
+  },
+  {
+    name: "Tutorials",
+    description: "Step-by-step guides and how-to articles."
+  },
+  {
+    name: "Personal",
+    description: "Personal thoughts and experiences."
+  }
+]
+
+categories_data.each do |category_attrs|
+  category = Category.find_or_create_by(name: category_attrs[:name]) do |c|
+    c.description = category_attrs[:description]
+  end
+  puts "Created category: #{category.name}"
+end
+
 # Create sample blog posts
 puts "Creating sample blog posts..."
 
@@ -8,7 +37,8 @@ posts_data = [
 
 This blog will cover various topics including web development, technology trends, and personal experiences. I hope you'll find the content interesting and engaging.
 
-Stay tuned for more posts coming soon!"
+Stay tuned for more posts coming soon!",
+    category: "Personal"
   },
   {
     title: "Getting Started with Ruby on Rails",
@@ -24,7 +54,8 @@ In this post, I'll share some tips for beginners:
 
 Rails follows the principle of 'Convention over Configuration' which means less setup and more coding. The framework provides sensible defaults that work for most applications.
 
-Happy coding!"
+Happy coding!",
+    category: "Tutorials"
   },
   {
     title: "The Power of Version Control with Git",
@@ -45,7 +76,8 @@ Some essential Git commands every developer should know:
 - git push (upload to remote repository)
 - git pull (download from remote repository)
 
-Don't forget to write meaningful commit messages - your future self will thank you!"
+Don't forget to write meaningful commit messages - your future self will thank you!",
+    category: "Web Development"
   },
   {
     title: "Building Responsive Web Applications",
@@ -60,17 +92,21 @@ Key principles for responsive design:
 
 CSS frameworks like Bootstrap or Tailwind CSS can help speed up the development process while ensuring responsiveness. However, understanding the underlying CSS concepts is crucial for creating truly custom responsive designs.
 
-Testing across multiple devices and screen sizes is essential. Use browser developer tools to simulate different devices during development."
+Testing across multiple devices and screen sizes is essential. Use browser developer tools to simulate different devices during development.",
+    category: "Web Development"
   }
 ]
 
 posts_data.each do |post_attrs|
+  category = Category.find_by(name: post_attrs[:category])
   post = Post.find_or_create_by(title: post_attrs[:title]) do |p|
     p.body = post_attrs[:body]
+    p.category = category
     p.created_at = rand(30.days).seconds.ago
   end
-  puts "Created post: #{post.title}"
+  puts "Created post: #{post.title} (Category: #{post.category&.name || 'None'})"
 end
 
 puts "Seed data created successfully!"
+puts "Total categories: #{Category.count}"
 puts "Total posts: #{Post.count}"

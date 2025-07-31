@@ -1,20 +1,15 @@
-<% content_for :title, "All Posts - My Blog" %>
+<% content_for :title, "#{@category.name} - My Blog" %>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-  <h1 class="h2">Latest Blog Posts</h1>
-  <%= link_to "Write New Post", new_post_path, class: "btn btn-primary" %>
-</div>
-
-<!-- Category Filter -->
-<div class="mb-4">
-  <div class="d-flex flex-wrap gap-2">
-    <%= link_to "All Posts", posts_path, 
-        class: "btn #{'btn-dark' if params[:category].blank?} #{'btn-outline-dark' if params[:category].present?}" %>
-    <% @categories.each do |category| %>
-      <%= link_to category.name, posts_path(category: category.id), 
-          class: "btn #{'btn-dark' if params[:category] == category.id.to_s} #{'btn-outline-dark' if params[:category] != category.id.to_s}" %>
+  <div>
+    <h1 class="h2"><%= @category.name %></h1>
+    <% if @category.description.present? %>
+      <p class="text-muted"><%= @category.description %></p>
     <% end %>
-    <%= link_to "Browse All Categories", categories_path, class: "btn btn-outline-secondary" %>
+  </div>
+  <div>
+    <%= link_to "← All Categories", categories_path, class: "btn btn-outline-secondary" %>
+    <%= link_to "All Posts", posts_path, class: "btn btn-outline-primary" %>
   </div>
 </div>
 
@@ -24,12 +19,6 @@
       <div class="col-md-6 mb-4">
         <div class="card h-100">
           <div class="card-body">
-            <% if post.category %>
-              <div class="mb-2">
-                <%= link_to post.category.name, category_path(post.category), 
-                    class: "badge bg-primary text-decoration-none" %>
-              </div>
-            <% end %>
             <h5 class="card-title">
               <%= link_to post.title, post, class: "text-decoration-none" %>
             </h5>
@@ -55,8 +44,8 @@
   </div>
 <% else %>
   <div class="text-center py-5">
-    <h3>No posts yet!</h3>
-    <p class="text-muted">Start writing your first blog post.</p>
-    <%= link_to "Write Your First Post", new_post_path, class: "btn btn-primary" %>
+    <h3>No posts in this category yet!</h3>
+    <p class="text-muted">Be the first to write a post in the <%= @category.name %> category.</p>
+    <%= link_to "Write New Post", new_post_path, class: "btn btn-primary" %>
   </div>
 <% end %>

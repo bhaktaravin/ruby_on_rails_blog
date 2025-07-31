@@ -10,14 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_31_011924) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_31_190750) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_posts_on_category_id"
   end
+
+  add_foreign_key "posts", "categories"
 end

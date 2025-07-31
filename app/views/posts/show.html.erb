@@ -2,6 +2,12 @@
 
 <article class="mb-4">
   <header class="mb-4">
+    <% if @post.category %>
+      <div class="mb-2">
+        <%= link_to @post.category.name, category_path(@post.category), 
+            class: "badge bg-primary text-decoration-none fs-6" %>
+      </div>
+    <% end %>
     <h1 class="display-4 mb-3"><%= @post.title %></h1>
     <p class="text-muted">
       <i class="fas fa-clock"></i>
@@ -19,6 +25,9 @@
 <div class="d-flex justify-content-between align-items-center">
   <div>
     <%= link_to "← Back to Posts", posts_path, class: "btn btn-outline-secondary" %>
+    <% if @post.category %>
+      <%= link_to "More in #{@post.category.name}", category_path(@post.category), class: "btn btn-outline-primary" %>
+    <% end %>
   </div>
   <div>
     <%= link_to "Edit", edit_post_path(@post), class: "btn btn-warning" %>
