@@ -1,0 +1,9 @@
+<% content_for :title, "Edit #{@post.title} - My Blog" %>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <h1 class="h2 mb-4">Edit Post</h1>
+    
+    <%= render "form", post: @post %>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<% content_for :title, "#{@post.title} - My Blog" %>
+
+<article class="mb-4">
+  <header class="mb-4">
+    <h1 class="display-4 mb-3"><%= @post.title %></h1>
+    <p class="text-muted">
+      <i class="fas fa-clock"></i>
+      Published <%= @post.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+    </p>
+  </header>
+  
+  <div class="post-content">
+    <%= simple_format(@post.body, class: "fs-5 lh-lg") %>
+  </div>
+</article>
+
+<hr class="my-4">
+
+<div class="d-flex justify-content-between align-items-center">
+  <div>
+    <%= link_to "← Back to Posts", posts_path, class: "btn btn-outline-secondary" %>
+  </div>
+  <div>
+    <%= link_to "Edit", edit_post_path(@post), class: "btn btn-warning" %>
+    <%= link_to "Delete", @post, method: :delete, 
+        confirm: "Are you sure you want to delete this post?", 
+        class: "btn btn-danger" %>
+  </div>
+</div>
