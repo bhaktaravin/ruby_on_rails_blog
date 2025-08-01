@@ -10,7 +10,9 @@
     <% end %>
     <h1 class="display-4 mb-3"><%= @post.title %></h1>
     <p class="text-muted">
-      <i class="fas fa-clock"></i>
+      <i class="bi bi-person-circle me-1"></i>
+      By <strong><%= @post.author_name %></strong> • 
+      <i class="bi bi-clock me-1"></i>
       Published <%= @post.created_at.strftime("%B %d, %Y at %I:%M %p") %>
     </p>
   </header>
@@ -29,10 +31,12 @@
       <%= link_to "More in #{@post.category.name}", category_path(@post.category), class: "btn btn-outline-primary" %>
     <% end %>
   </div>
-  <div>
-    <%= link_to "Edit", edit_post_path(@post), class: "btn btn-warning" %>
-    <%= link_to "Delete", @post, method: :delete, 
-        confirm: "Are you sure you want to delete this post?", 
-        class: "btn btn-danger" %>
-  </div>
+  <% if user_signed_in? && @post.user == current_user %>
+    <div>
+      <%= link_to "Edit", edit_post_path(@post), class: "btn btn-warning" %>
+      <%= link_to "Delete", @post, method: :delete, 
+          confirm: "Are you sure you want to delete this post?", 
+          class: "btn btn-danger" %>
+    </div>
+  <% end %>
 </div>

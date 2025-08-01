@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
   belongs_to :category, optional: true
+  belongs_to :user, optional: true
   
   validates :title, presence: true, length: { minimum: 5 }
   validates :body, presence: true, length: { minimum: 10 }
@@ -14,5 +15,9 @@ class Post < ApplicationRecord
   
   def excerpt(limit = 150)
     body.truncate(limit)
+  end
+
+  def author_name
+    user&.display_name || "Anonymous"
   end
 end

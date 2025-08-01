@@ -38,16 +38,18 @@
             </p>
             <p class="card-text">
               <small class="text-muted">
-                Published <%= time_ago_in_words(post.created_at) %> ago
+                By <%= post.author_name %> • Published <%= time_ago_in_words(post.created_at) %> ago
               </small>
             </p>
           </div>
           <div class="card-footer bg-transparent">
             <%= link_to "Read More", post, class: "btn btn-outline-primary btn-sm" %>
-            <%= link_to "Edit", edit_post_path(post), class: "btn btn-outline-secondary btn-sm" %>
-            <%= link_to "Delete", post, method: :delete, 
-                confirm: "Are you sure?", 
-                class: "btn btn-outline-danger btn-sm" %>
+            <% if user_signed_in? && post.user == current_user %>
+              <%= link_to "Edit", edit_post_path(post), class: "btn btn-outline-secondary btn-sm" %>
+              <%= link_to "Delete", post, method: :delete, 
+                  confirm: "Are you sure?", 
+                  class: "btn btn-outline-danger btn-sm" %>
+            <% end %>
           </div>
         </div>
       </div>
